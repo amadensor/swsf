@@ -100,24 +100,37 @@ function list_roles($call_vars)  //Application like code for security maintenanc
   return $role_list;
 }
 
-function update_role($call_vars)  //Application like code for security maintenance
+function list_services($call_vars)  //Application like code for security maintenance
 {
-  $role=urlencode($call_vars['upd_role']);
-  $query="delete from role_actions where role_name='$role'";
-  db_exec($query);
-  foreach($call_vars as $role_update) {
-  	if (array_key_exists('upd_action',$role_update))
-  	{
-  	$service_name=urlencode($role_update['upd_service_name']);
-  	$action=urlencode($role_update['upd_action']);
-  	if ($action and $service_name)
-  	{
-  	  	$query="insert into role_actions (role_name,service_name,action) values('$role','$service_name','$action');";
-  	  	db_exec($query);
-  	}
-  }
-  }
+  $query="select service_name, description from services;";
+  $service_list=db_retrieve($query);
+  return $service_list;
 }
 
+function list_actions($call_vars)  //Application like code for security maintenance
+{
+  $query="select action, description from actions;";
+  $action_list=db_retrieve($query);
+  return $action_list;
+}
+
+
+function delete_role_action($call_vars)  //Application like code for security maintenance
+{
+  $role=urlencode($call_vars['upd_role']);
+  $service_name=urlencode($call_vars['upd_service_name']);
+  $action=urlencode($call_vars['upd_action']);
+  $query="delete from role_actions where role_name='$role' and service_name='$service_name' and action='$action';";
+  db_exec($query);
+}
+
+function add_role_action($call_vars)  //Application like code for security maintenance
+{
+  $role=urlencode($call_vars['upd_role']);
+  $service_name=urlencode($call_vars['upd_service_name']);
+  $action=urlencode($call_vars['upd_action']);
+  $query="insert into role_actions (role_name,service_name,action) values ('$role','$service_name','$action');";
+  db_exec($query);
+}
 ?>
 

@@ -2,8 +2,6 @@
 </head>
 <body >
 Role: <?=$roles['role']?>
-<form method=post>
-<input type=hidden name=upd_role value='<?=$role?>'>
 <table border=1>
 <th>Service<th>Action
 <?php
@@ -13,11 +11,31 @@ Role: <?=$roles['role']?>
       {
 ?>
 <tr>
-<td><input type=text name=upd_service_name[] value='<?=$role['service_name']?>'> 
-<td><input type=test name=upd_action[] value='<?=$role['action']?>'> 
+<form method=post>
+<input type=hidden name=role value='<?=$roles['role']?>'>
+<td><input type=hidden name=upd_service_name value='<?=$role['service_name']?>'> <?=$role['service_name']?>
+<td><input type=hidden name=upd_action value='<?=$role['action']?>'> <?=$role['action']?>
+<input type=hidden name=action value=delete>
+<td><input type=submit value="-"></form>
 <?php
       }
     }
-    print"</table><input type=submit></form>";
-?>
+    ?>
+    <form method="post">
+		<tr>
+<input type=hidden name=role value='<?=$roles['role']?>'>
+<td><select name=upd_service_name >
+	<?php foreach ($select_services as $select_service){ if (array_key_exists('service_name',$select_service)){?>
+	<option value=<?=$select_service['service_name']?>><?=$select_service['service_name']?>:<?=$select_service['description']?></option>
+	<?php }} ?>
+<td><select name=upd_action > 
+	<?php foreach ($select_actions as $select_action){ if (array_key_exists('action',$select_action)){?>
+	<option value=<?=$select_action['action']?>><?=$select_action['action']?>:<?=$select_action['description']?></option>
+	<?php }} ?>
+<input type=hidden name=action value=add>
+<td><input type=submit value="+"></form>
+		</tr>
+		</form>
+    </table>
+<a href="role_actions.php">Choose new role</a>
 </body></html>
