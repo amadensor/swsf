@@ -1,5 +1,7 @@
 <?php
 
+//Maintain what actions a role is allowed to execute.
+
 require_once 'utilities.php';
 
 if (array_key_exists('upd_action',$_POST))

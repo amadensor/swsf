@@ -2,6 +2,9 @@
 </head>
 <body>
 <?php
+
+//Start a new session.
+
 session_start();
 require 'db_connect.php';
 
@@ -24,14 +27,14 @@ db_exec($query);
 }
 if (password_verify($_POST['pass'], $pass))
 {
-$_SESSION['user']=$user;
-  $new_key=uniqid();
+    $_SESSION['user']=$user;
+    $new_key=uniqid();
     $_SESSION["session_key"]=$new_key;
     $query="delete from sessions where userid=$user;";
     db_exec($query);
     $query="insert into sessions (userid,key) values($user,'$new_key');";
     db_exec($query);
-    //print $query;
+    //If the password was good, create a new web service session and put it in the PHP session
 }
 else
 {

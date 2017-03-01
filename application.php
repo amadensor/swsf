@@ -1,4 +1,5 @@
 <?php
+//Application specific functions, called based on security configuration.
 
 function get_scout($json)
 {

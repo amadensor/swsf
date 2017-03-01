@@ -5,7 +5,7 @@ require_once 'config.php';
 
 
 
-function check_perm($json)
+function check_perm($json) //Return true or false based on whether user has a role with this permission
 {
   $query="select count(*) from role_actions ra,roles r,user_roles ur,users u where r.role_name=r.role_name and ur.role_name=r.role_name and ur.userid=u.userid and u.userid=".$json["user"]." and ra.service_name='".$json["service"]."' and ra.action='".$json["action"]."';";
   $perm=db_retrieve($query);
@@ -18,7 +18,7 @@ function check_perm($json)
   
 }
 
-function get_func($json)
+function get_func($json) //Get the appropriate function name for this action for this service.
 {
   $query="select function from service_actions where service_name='".$json["service"]."' and action='".$json["action"]."';";
   $func=db_retrieve($query);
@@ -34,7 +34,7 @@ function get_func($json)
   
 }
 
-function verify_session($json)
+function verify_session($json) //Verify that the sesstion was valid and not hijacked with a rolling key.
 {
   if ($json["session_key"])
   {
@@ -64,7 +64,7 @@ function verify_session($json)
   }
 }
 
-function call_handler($call_vars)
+function call_handler($call_vars) //Call the web service from PHP.   The service could also be called from an external application.
 {
   global $handler_url;
   $call_vars["user"]=$_SESSION["user"];
@@ -82,7 +82,7 @@ function call_handler($call_vars)
 }
 
 
-function get_role_action ($call_vars)
+function get_role_action ($call_vars)  //Application like code for security maintenance
 {
   
   $role_name=urlencode($call_vars['role']);
@@ -93,14 +93,14 @@ function get_role_action ($call_vars)
   
 }
 
-function list_roles($call_vars)
+function list_roles($call_vars)  //Application like code for security maintenance
 {
   $query="select role_name, description from roles;";
   $role_list=db_retrieve($query);
   return $role_list;
 }
 
-function update_role($call_vars)
+function update_role($call_vars)  //Application like code for security maintenance
 {
   $role=urlencode($call_vars['upd_role']);
   $query="delete from role_actions where role_name='$role'";

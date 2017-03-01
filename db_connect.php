@@ -1,5 +1,7 @@
 <?php
 
+//Connection to DB and simplified query->assoc array
+
 require_once 'MDB2.php';
 require_once 'config.php';
 
@@ -12,7 +14,7 @@ require_once 'config.php';
   ;
   
   
-  function db_exec($query)
+  function db_exec($query) //Just execute and return no result
   {
     $dbconn=& MDB2::singleton();
     
@@ -35,7 +37,7 @@ require_once 'config.php';
     return TRUE;
   }
   
-  function db_retrieve($query)
+  function db_retrieve($query) //Query->assoc array
   {
     $dbconn=& MDB2::singleton();
     
@@ -58,7 +60,7 @@ require_once 'config.php';
     return $rows;
   }
 
-  function log_message($text)
+  function log_message($text) //Append a log in memory so all can be written later
 {
   static $logs=array();
   if ($text)
