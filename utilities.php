@@ -7,13 +7,9 @@ require_once 'config.php';
 
 function check_perm($json)
 {
-  //print"check perm";
   $query="select count(*) from role_actions ra,roles r,user_roles ur,users u where r.role_name=r.role_name and ur.role_name=r.role_name and ur.userid=u.userid and u.userid=".$json["user"]." and ra.service_name='".$json["service"]."' and ra.action='".$json["action"]."';";
-  //print "<br><br>".$query." <br><br>\n";
   $perm=db_retrieve($query);
-  //var_dump($perm);
   $perm_count=$perm[0]["count"];
-  //print "count:".$perm_count;
   if ($perm_count==0) 
     return false;
   else 
@@ -24,23 +20,15 @@ function check_perm($json)
 
 function get_func($json)
 {
-  //print"Get Func";
   $query="select function from service_actions where service_name='".$json["service"]."' and action='".$json["action"]."';";
-  //print "<br>Get Function: $query<br>";
   $func=db_retrieve($query);
-  //var_dump($func);
-  
-  //$func_name=db_retrieve($func,0);
-  //var_dump($func_name);
   $func_name=$func[0]["function"];
   if (check_perm($json))
   {
-    //print"permitted";
     return $func_name;
   }
   else
   {
-    //print"Denied";
     return NULL;
   }
   
@@ -48,16 +36,12 @@ function get_func($json)
 
 function verify_session($json)
 {
-  //print"verify session";
-  //print "<br>User: ".$json["user"]."\n";
   if ($json["session_key"])
   {
   $query="select count(*) from sessions where userid=".$json["user"]." and key='".$json["session_key"]."';";
   $key=db_retrieve($query);
   $count=$key[0]["count"];
   $new_key=uniqid();
-  //print "Old Key: $old_key <br>\n";
-  //print "New Key: $new_key <br>\n";
   if ($count==1)
   {
     $json["session_key"]=$new_key;
@@ -87,14 +71,11 @@ function call_handler($call_vars)
   $call_vars["session_key"]=$_SESSION["session_key"];
   $json_request=json_encode($call_vars);
   $service_request = "service_request=" . $json_request . "&";
-  //print "\n<br>SR : $service_request <br>\n";
   $ch = curl_init($handler_url);
   curl_setopt($ch, CURLOPT_POST, true);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $service_request);
-  //print "\n<br><br>Request: $json_request\n<br><br>";
   $result = curl_exec($ch);
-  //print "\n<br>Result: $result <br><br>\n";
   $return_vars=json_decode($result,TRUE);
   $_SESSION["session_key"]=$return_vars["session_key"];
   return $return_vars;

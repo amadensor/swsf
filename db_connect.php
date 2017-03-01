@@ -9,15 +9,6 @@ require_once 'config.php';
     print "conn error\n";
     die($dbconn->getMessage());
   };
-  /*
-  $result=& $dbconn->query('select * from users;');
-  
-  if (PEAR::IsError($result)){
-    print "select error\n";
-    //var_dump($result);
-    die($result->getMessage());
-  }
-  */
   ;
   
   
@@ -59,7 +50,6 @@ require_once 'config.php';
     if (PEAR::IsError($result)){
       print "<br>select error\n";
       print "<br>DB_GET $query <BR>\n";
-      //var_dump($result);
       die($result->getMessage());
     }
     ;
