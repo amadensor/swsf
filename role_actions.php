@@ -4,7 +4,7 @@
 
 require_once 'utilities.php';
 
-if (array_key_exists('upd_action',$_POST))
+if (is_array($_POST) && array_key_exists('upd_action',$_POST))
 {
 	if ($_POST['action']=='delete')
 	{
@@ -26,7 +26,7 @@ if (array_key_exists('upd_action',$_POST))
 	}
 }
 
-if (array_key_exists('role',$_POST))
+if (is_array($_POST) && array_key_exists('role',$_POST))
 {
 	$act_req['service']='action';
 	$act_req['action']='list';

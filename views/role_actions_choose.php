@@ -5,7 +5,7 @@
   <select name=role id=role>
 <?php
   foreach($roles as $role) {
-    if (array_key_exists('role_name',$role))
+    if (is_array($role) && array_key_exists('role_name',$role))
     {
       $role_name=$role["role_name"];
       $description=$role["description"];

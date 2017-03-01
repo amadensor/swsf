@@ -8,7 +8,8 @@ require 'application.php';
 $service_request=$_POST["service_request"];
 $json_request=json_decode($service_request,TRUE);
 if (
-	array_key_exists("user",$json_request)
+    is_array($json_request)
+	and array_key_exists("user",$json_request)
 	and array_key_exists("session_key",$json_request)
 	and array_key_exists("service",$json_request)
 	and array_key_exists("action",$json_request)

@@ -7,7 +7,7 @@ Role: <?=$roles['role']?>
 <?php
     foreach ($roles as $role)
     {
-      if(array_key_exists('action',$role))
+      if(is_array($role) && array_key_exists('action',$role))
       {
 ?>
 <tr>
@@ -25,11 +25,11 @@ Role: <?=$roles['role']?>
 		<tr>
 <input type=hidden name=role value='<?=$roles['role']?>'>
 <td><select name=upd_service_name >
-	<?php foreach ($select_services as $select_service){ if (array_key_exists('service_name',$select_service)){?>
+	<?php foreach ($select_services as $select_service){ if (is_array($select_service) && array_key_exists('service_name',$select_service)){?>
 	<option value=<?=$select_service['service_name']?>><?=$select_service['service_name']?>:<?=$select_service['description']?></option>
 	<?php }} ?>
 <td><select name=upd_action > 
-	<?php foreach ($select_actions as $select_action){ if (array_key_exists('action',$select_action)){?>
+	<?php foreach ($select_actions as $select_action){ if (is_array($select_action) && array_key_exists('action',$select_action)){?>
 	<option value=<?=$select_action['action']?>><?=$select_action['action']?>:<?=$select_action['description']?></option>
 	<?php }} ?>
 <input type=hidden name=action value=add>
