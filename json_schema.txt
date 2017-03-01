@@ -1,0 +1,10 @@
+user
+session key
+service
+action
+data elements
+
+{"user":"1","session_key":"uuid","service":"scout","action":"get","id":"johnson"}
+
+
+{"lxer":"fff","user":"stuff"}

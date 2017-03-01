@@ -1,0 +1,14 @@
+Data is received by handler.php in a post in the field service_request.
+Return is json.
+Not using the current key will invalidate the session.
+Session key is uuid.
+DB specific code is in the handler.php
+Session handling, security,  and function choice are in utilities.php
+Application code is in application.php.   All functions accept one associative array and return one associative array.  
+This will be returned to the web service as a json docuemnt.
+
+
+php5-curl
+php-mdb2-driver-pgsql
+
+
