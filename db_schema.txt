@@ -90,6 +90,7 @@ grant select,insert,update,delete on log_messages to "swsf";
 insert into users (login,pass) values ('admin','reset');
 
 insert into services (service_name,description) values('role_action','Actions a role can perform');
+insert into services (service_name,description) values('role','Roles that can be assigned');
 insert into services (service_name,description) values('logs','Log messages');
 insert into services (service_name,description) values('action','Actions that exist');
 insert into services (service_name,description) values('service','Services that exist');
@@ -101,7 +102,10 @@ insert into actions (action,description) values ('search','Find');
 insert into actions (action,description) values ('delete','Remove');
 insert into actions (action,description) values ('list','List Items');
 
-insert into service_actions (service_name,action,function) values ('role_action','list','list_roles');
+insert into service_actions (service_name,action,function) values ('role','list','list_roles');
+insert into service_actions (service_name,action,function) values ('role','add','add_role');
+insert into service_actions (service_name,action,function) values ('role','update','update_role');
+insert into service_actions (service_name,action,function) values ('role','delete','delete_role');
 insert into service_actions (service_name,action,function) values ('role_action','get','get_role_action');
 insert into service_actions (service_name,action,function) values ('role_action','add','add_role_action');
 insert into service_actions (service_name,action,function) values ('role_action','delete','delete_role_action');
@@ -112,7 +116,10 @@ insert into roles (role_name,description) values('public','Public');
 insert into roles (role_name,description) values('admin','Administrator');
 
 insert into role_actions (role_name,service_name,action) values ('admin','role_action','search');
-insert into role_actions (role_name,service_name,action) values ('admin','role_action','list');
+insert into role_actions (role_name,service_name,action) values ('admin','role','list');
+insert into role_actions (role_name,service_name,action) values ('admin','role','add');
+insert into role_actions (role_name,service_name,action) values ('admin','role','update');
+insert into role_actions (role_name,service_name,action) values ('admin','role','delete');
 insert into role_actions (role_name,service_name,action) values ('admin','role_action','get');
 insert into role_actions (role_name,service_name,action) values ('admin','role_action','update');
 insert into role_actions (role_name,service_name,action) values ('admin','role_action','add');

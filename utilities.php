@@ -132,5 +132,28 @@ function add_role_action($call_vars)  //Application like code for security maint
   $query="insert into role_actions (role_name,service_name,action) values ('$role','$service_name','$action');";
   db_exec($query);
 }
-?>
 
+function add_role($call_vars)
+{
+  $role=urlencode($call_vars['role_name']);
+  $description=urlencode($call_vars['description']);
+  $query="insert into roles (role_name,description) values ('$role','$description');";
+  db_exec($query);
+}	
+
+function update_role($call_vars)
+{
+  $role=urlencode($call_vars['role_name']);
+  $description=urlencode($call_vars['description']);
+  $query="update roles set description='$description' where role_name='$role';";
+  db_exec($query);
+}	
+
+function delete_role($call_vars)
+{
+  $role=urlencode($call_vars['role_name']);
+  $query="delete from roles where role_name='$role';";
+  db_exec($query);
+}	
+
+?>

@@ -43,7 +43,7 @@ if (is_array($_POST) && array_key_exists('role',$_POST))
 }
 else
 {
-  $req["service"]="role_action";
+  $req["service"]="role";
   $req["action"]="list";
   $roles=call_handler($req);
   include ('views/role_actions_choose.php');
