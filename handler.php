@@ -4,7 +4,7 @@
 
 require 'db_connect.php';
 require 'utilities.php';
-require 'application.php';
+require '../application.php';
 $service_request=$_POST["service_request"];
 $json_request=json_decode($service_request,TRUE);
 if (
