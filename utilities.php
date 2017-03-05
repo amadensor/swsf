@@ -180,4 +180,27 @@ function delete_service($call_vars)
   db_exec($query);
 }	
 
+function add_action($call_vars)
+{
+  $action=urlencode($call_vars['action_name']);
+  $description=urlencode($call_vars['description']);
+  $query="insert into actions (action,description) values ('$action','$description');";
+  db_exec($query);
+}	
+
+function update_action($call_vars)
+{
+  $action=urlencode($call_vars['action_name']);
+  $description=urlencode($call_vars['description']);
+  $query="update actions set description='$description' where action='$action';";
+  db_exec($query);
+}	
+
+function delete_action($call_vars)
+{
+  $action=urlencode($call_vars['action_name']);
+  $query="delete from actions where action='$action';";
+  db_exec($query);
+}	
+
 ?>

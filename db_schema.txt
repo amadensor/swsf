@@ -114,6 +114,9 @@ insert into service_actions (service_name,action,function) values ('service','li
 insert into service_actions (service_name,action,function) values ('service','add','add_service');
 insert into service_actions (service_name,action,function) values ('service','update','update_service');
 insert into service_actions (service_name,action,function) values ('service','delete','delete_service');
+insert into service_actions (service_name,action,function) values ('action','add','add_action');
+insert into service_actions (service_name,action,function) values ('action','update','update_action');
+insert into service_actions (service_name,action,function) values ('action','delete','delete_action');
 
 insert into roles (role_name,description) values('public','Public');
 insert into roles (role_name,description) values('admin','Administrator');
@@ -129,6 +132,9 @@ insert into role_actions (role_name,service_name,action) values ('admin','role_a
 insert into role_actions (role_name,service_name,action) values ('admin','role_action','delete');
 insert into role_actions (role_name,service_name,action) values ('admin','logs','list');
 insert into role_actions (role_name,service_name,action) values ('admin','action','list');
+insert into role_actions (role_name,service_name,action) values ('admin','action','add');
+insert into role_actions (role_name,service_name,action) values ('admin','action','update');
+insert into role_actions (role_name,service_name,action) values ('admin','action','delete');
 insert into role_actions (role_name,service_name,action) values ('admin','service','list');
 insert into role_actions (role_name,service_name,action) values ('admin','service','add');
 insert into role_actions (role_name,service_name,action) values ('admin','service','update');
