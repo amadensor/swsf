@@ -13,10 +13,15 @@ foreach ($roles as $role)
 <input type="text" name="role_name" value='<?=$role['role_name']?>'>
 <td><input type="text" name="description" value='<?=$role['description']?>'>
 <td><button type=submit name="action" value="delete">Remove</button>
-<button type=submit name="action" value="add">Add</button>
 <button type=submit name="action" value="update">Update</button>
 </form>
 <?php }} ?>
+<form method=post>
+<tr><td>
+<input type="text" name="role_name">
+<td><input type="text" name="description">
+<td><button type=submit name="action" value="add">Add</button>
+</form>
 </table>
 </body>
 </html>

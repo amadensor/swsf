@@ -3,11 +3,8 @@ require_once ('utilities.php');
 
 if (is_array($_POST) && array_key_exists('action_name',$_POST))
 {
-	var_dump($_POST);
-	print "<br><br><br>";
 	if ($_POST['action']=='add')
 	{
-		print "add";
 		$action_name=urlencode($_POST['action_name']);
 		$description=urlencode($_POST['description']);
 		$req['service']='action';
@@ -18,7 +15,6 @@ if (is_array($_POST) && array_key_exists('action_name',$_POST))
 	}
 	elseif ($_POST['action']=='delete')
 	{
-		print "delete";
 		$action_name=urlencode($_POST['action_name']);
 		$req['service']='action';
 		$req['action']='delete';
@@ -27,7 +23,6 @@ if (is_array($_POST) && array_key_exists('action_name',$_POST))
 	}
 	elseif ($_POST['action']=='update')
 	{
-		print "update";
 		$action_name=urlencode($_POST['action_name']);
 		$description=urlencode($_POST['description']);
 		$req['service']='action';
@@ -39,6 +34,6 @@ if (is_array($_POST) && array_key_exists('action_name',$_POST))
 }
 $req['service']='action';
 $req['action']='list';
-$actions=call_handler($req);print "Get form data";
+$actions=call_handler($req);
 include('views/actions_form.php');
 ?>

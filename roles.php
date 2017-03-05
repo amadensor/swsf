@@ -3,11 +3,8 @@ require_once ('utilities.php');
 
 if (is_array($_POST) && array_key_exists('role_name',$_POST))
 {
-	var_dump($_POST);
-	print "<br><br><br>";
 	if ($_POST['action']=='add')
 	{
-		print "add";
 		$role_name=urlencode($_POST['role_name']);
 		$description=urlencode($_POST['description']);
 		$req['service']='role';
@@ -18,7 +15,6 @@ if (is_array($_POST) && array_key_exists('role_name',$_POST))
 	}
 	elseif ($_POST['action']=='delete')
 	{
-		print "delete";
 		$role_name=urlencode($_POST['role_name']);
 		$req['service']='role';
 		$req['action']='delete';
@@ -27,7 +23,6 @@ if (is_array($_POST) && array_key_exists('role_name',$_POST))
 	}
 	elseif ($_POST['action']=='update')
 	{
-		print "update";
 		$role_name=urlencode($_POST['role_name']);
 		$description=urlencode($_POST['description']);
 		$req['service']='role';
@@ -39,6 +34,6 @@ if (is_array($_POST) && array_key_exists('role_name',$_POST))
 }
 $req['service']='role';
 $req['action']='list';
-$roles=call_handler($req);print "Get form data";
+$roles=call_handler($req);
 include('views/roles_form.php');
 ?>
