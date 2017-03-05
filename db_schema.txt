@@ -111,6 +111,9 @@ insert into service_actions (service_name,action,function) values ('role_action'
 insert into service_actions (service_name,action,function) values ('role_action','delete','delete_role_action');
 insert into service_actions (service_name,action,function) values ('action','list','list_actions');
 insert into service_actions (service_name,action,function) values ('service','list','list_services');
+insert into service_actions (service_name,action,function) values ('service','add','add_service');
+insert into service_actions (service_name,action,function) values ('service','update','update_service');
+insert into service_actions (service_name,action,function) values ('service','delete','delete_service');
 
 insert into roles (role_name,description) values('public','Public');
 insert into roles (role_name,description) values('admin','Administrator');
@@ -127,6 +130,9 @@ insert into role_actions (role_name,service_name,action) values ('admin','role_a
 insert into role_actions (role_name,service_name,action) values ('admin','logs','list');
 insert into role_actions (role_name,service_name,action) values ('admin','action','list');
 insert into role_actions (role_name,service_name,action) values ('admin','service','list');
+insert into role_actions (role_name,service_name,action) values ('admin','service','add');
+insert into role_actions (role_name,service_name,action) values ('admin','service','update');
+insert into role_actions (role_name,service_name,action) values ('admin','service','delete');
 
 insert into user_roles (userid,role_name) (select userid,'admin' from users where login='admin');
 

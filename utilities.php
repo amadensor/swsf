@@ -156,4 +156,28 @@ function delete_role($call_vars)
   db_exec($query);
 }	
 
+
+function add_service($call_vars)
+{
+  $service=urlencode($call_vars['service_name']);
+  $description=urlencode($call_vars['description']);
+  $query="insert into services (service_name,description) values ('$service','$description');";
+  db_exec($query);
+}	
+
+function update_service($call_vars)
+{
+  $service=urlencode($call_vars['service_name']);
+  $description=urlencode($call_vars['description']);
+  $query="update services set description='$description' where service_name='$service';";
+  db_exec($query);
+}	
+
+function delete_service($call_vars)
+{
+  $service=urlencode($call_vars['service_name']);
+  $query="delete from services where service_name='$service';";
+  db_exec($query);
+}	
+
 ?>
