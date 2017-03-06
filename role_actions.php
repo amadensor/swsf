@@ -2,7 +2,7 @@
 
 //Maintain what actions a role is allowed to execute.
 
-require_once 'utilities.php';
+require_once 'client_utilities.php';
 
 if (is_array($_POST) && array_key_exists('upd_action',$_POST))
 {
@@ -47,10 +47,6 @@ else
   $req["action"]="list";
   $roles=call_handler($req);
   include ('views/role_actions_choose.php');
-
-  
-  ?>
-  <?php
 }
 ?>
 

@@ -2,6 +2,7 @@
 
 //Show the most recent 100 logs
 
+require_once('client_utilities.php');
 require_once('db_connect.php');
 require_once('utilities.php');
 

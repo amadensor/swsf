@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 require_once 'config.php';
 
 
@@ -62,23 +61,6 @@ function verify_session($json) //Verify that the sesstion was valid and not hija
   {
     return null;
   }
-}
-
-function call_handler($call_vars) //Call the web service from PHP.   The service could also be called from an external application.
-{
-  global $handler_url;
-  $call_vars["user"]=$_SESSION["user"];
-  $call_vars["session_key"]=$_SESSION["session_key"];
-  $json_request=json_encode($call_vars);
-  $service_request = "service_request=" . $json_request . "&";
-  $ch = curl_init($handler_url);
-  curl_setopt($ch, CURLOPT_POST, true);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $service_request);
-  $result = curl_exec($ch);
-  $return_vars=json_decode($result,TRUE);
-  $_SESSION["session_key"]=$return_vars["session_key"];
-  return $return_vars;
 }
 
 
