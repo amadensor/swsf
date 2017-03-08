@@ -20,7 +20,10 @@ if (
 	$session_key=$json_request["session_key"];
 	$func=get_func($json_request);
 	
-	$results=$func($json_request);
+	if ($func)
+	{
+		$results=$func($json_request);
+	}
 	$results['user']=$user;
 	$results['session_key']=$session_key;
 	
