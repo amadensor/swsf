@@ -19,11 +19,11 @@ function check_perm($json) //Return true or false based on whether user has a ro
 
 function get_func($json) //Get the appropriate function name for this action for this service.
 {
-  $query="select function from service_actions where service_name='".$json["service"]."' and action='".$json["action"]."';";
-  $func=db_retrieve($query);
-  $func_name=$func[0]["function"];
   if (check_perm($json))
   {
+	$query="select function from service_actions where service_name='".$json["service"]."' and action='".$json["action"]."';";
+	$func=db_retrieve($query);
+	$func_name=$func[0]["function"];
     return $func_name;
   }
   else
@@ -184,5 +184,40 @@ function delete_action($call_vars)
   $query="delete from actions where action='$action';";
   db_exec($query);
 }	
+
+function list_service_action($call_vars)
+{
+  $service=urlencode($call_vars['service_name']);
+  $query="select service_name, action, function from service_actions where service_name='$service';";
+  $service_action_list=db_retrieve($query);
+  return $service_action_list;
+}
+
+function add_service_action($call_vars)
+{
+	$service=urlencode($call_vars['service_name']);
+	$action=urlencode($call_vars['action_name']);
+	$function=urlencode($call_vars['function']);
+	$query="insert into service_actions (service_name,action,function) values ('$service','$action','$function')";
+	db_exec($query);
+}
+
+function update_service_action($call_vars)
+{
+	$service=urlencode($call_vars['service_name']);
+	$action=urlencode($call_vars['action_name']);
+	$function=urlencode($call_vars['function']);
+	$query="update service_actions set function='$function' where service_name='$service' and action='$action';";
+	db_exec($query);
+}
+
+function delete_service_action($call_vars)
+{
+	$service=urlencode($call_vars['service_name']);
+	$action=urlencode($call_vars['action_name']);
+	$query="delete from service_actions where service_name='$service' and action='$action';";
+	db_exec($query);
+}
+
 
 ?>
