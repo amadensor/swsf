@@ -1,5 +1,6 @@
 <html>
 <body>
+<?php include ('menu.php'); ?>
 <form method=post>
 <select name=service_name>
 <?php

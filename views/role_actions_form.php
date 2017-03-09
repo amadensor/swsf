@@ -1,6 +1,7 @@
 <html><head>
 </head>
-<body >
+<body>
+<?php include ('menu.php'); ?>	
 Role: <?=$roles['role']?>
 <table border=1>
 <th>Service<th>Action

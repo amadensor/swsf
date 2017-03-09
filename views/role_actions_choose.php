@@ -1,6 +1,7 @@
 <html><head>
 </head>
-<body >
+<body>
+<?php include ('menu.php'); ?>
   <form method=post>
   <select name=role id=role>
 <?php

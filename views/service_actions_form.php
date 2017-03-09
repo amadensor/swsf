@@ -1,5 +1,6 @@
 <html>
 <body>
+<?php include ('menu.php'); ?>
 	<table border=1>
 <?php
 foreach($service_actions as $service_action)

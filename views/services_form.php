@@ -1,5 +1,6 @@
 <html>
 <body>
+<?php include ('menu.php'); ?>
 <table border=1>
 <tr><th>Service Name</th><th>Description</th></tr>
 <?php

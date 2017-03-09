@@ -1,5 +1,6 @@
 <html>
 <body>
+<?php include ('menu.php'); ?>
 Show Logs:
 <table border=1>
 <tr><th>User</th><th>Date/Time</th><th>Key</th><th>Messages</th></tr>
