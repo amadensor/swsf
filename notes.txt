@@ -7,8 +7,12 @@ Session handling, security,  and function choice are in utilities.php
 Application code is in application.php.   All functions accept one associative array and return one associative array.  
 This will be returned to the web service as a json docuemnt.
 
-
+Required:
+postgresql
+libapache2-mod-php5
 php5-curl
 php-mdb2-driver-pgsql
 
-
+Nice to have:
+geany
+pgadmin3
