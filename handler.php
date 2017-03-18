@@ -27,7 +27,7 @@ if (
 	$results['user']=$user;
 	$results['session_key']=$session_key;
 	
-	$ret_json=json_encode($results);
+	$ret_json=json_encode($results,0,512);
 	$log_messages=log_message("");
 	$messages=urlencode(json_encode($log_messages));
 	$query ="insert into log_messages(userid,execution_dttm,key,request,response,messages) values ($user,now(),'$session_key','".$service_request."','".$ret_json."','".$messages."');";

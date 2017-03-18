@@ -44,7 +44,7 @@ function call_handler($call_vars) //Call the web service from PHP.   The service
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $service_request);
   $result = curl_exec($ch);
-  $return_vars=json_decode($result,TRUE);
+  $return_vars=json_decode($result,TRUE,512);
   $_SESSION["session_key"]=$return_vars["session_key"];
   return $return_vars;
 }

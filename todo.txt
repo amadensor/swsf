@@ -4,3 +4,6 @@ DB security (not ident)
 json web services
 simple web services framework
 
+user role page
+push service/action/function in code
+public role applies even if not logged in
