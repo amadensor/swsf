@@ -22,19 +22,22 @@ require_once 'config.php';
       print "exec conn error\n";
       die($dbconn->getMessage());
     };
-    log_message("DB_EXEC $query");
+    //log_message("DB_EXEC $query");
     
     $result=& $dbconn->exec($query);
     
-    if (PEAR::IsError($result)){
-      print "<br>exec error\n";
-      print "<br>DB_EXEC $query <BR>\n";
-      //var_dump($result);
-      die($result->getMessage());
+    if (PEAR::IsError($result))
+    {
+		//print "<br>exec error\n";
+		//print "<br>DB_EXEC $query <BR>\n";
+		//var_dump($result);
+		log_message($result->getMessage());
+		return FALSE;
     }
-    ;
-    
-    return TRUE;
+    else
+    {
+		return TRUE;
+	}
   }
   
   function db_retrieve($query) //Query->assoc array
@@ -45,19 +48,22 @@ require_once 'config.php';
       print "conn error\n";
       die($dbconn->getMessage());
     };
-    log_message("DB_GET $query");
+    //log_message("DB_GET $query");
     
     $result=& $dbconn->query($query);
     
-    if (PEAR::IsError($result)){
-      print "<br>select error\n";
-      print "<br>DB_GET $query <BR>\n";
-      die($result->getMessage());
+    if (PEAR::IsError($result))
+    {
+		//print "<br>select error\n";
+		//print "<br>DB_GET $query <BR>\n";
+		log_message($result->getMessage());
+		return FALSE;
     }
-    ;
-    
-    $rows=$result->fetchAll(MDB2_FETCHMODE_ASSOC);
-    return $rows;
+    else
+    {
+		$rows=$result->fetchAll(MDB2_FETCHMODE_ASSOC);
+		return $rows;
+	}
   }
 
   function log_message($text) //Append a log in memory so all can be written later
