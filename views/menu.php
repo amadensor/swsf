@@ -1,32 +1,34 @@
 <?php
 $menu['actions.php']='Actions';
-$menu['login.php']='Login';
 $menu['logs.php']='Logs';
 $menu['role_actions.php']='Role Actions';
 $menu['roles.php']='Roles';
+$menu['user_roles.php']='User Roles';
 $menu['service_actions.php']='Service Actions';
 $menu['services.php']='Services';
-//$head=getallheaders();
-//var_dump($head);
-//var_dump($_SERVER);
 
-//var_dump($_SERVER['HTTP_HOST']);
-//var_dump($_SERVER['REQUEST_URI']);
-//print_r($_SERVER);
+
 $base= basename($_SERVER['REQUEST_URI']);
 print "<center></center><table border=0 align=center><tr>";
-foreach ($menu as $key=>$item)
+if (array_key_exists('session_key',$_SESSION) && $_SESSION["session_key"]<>"")
 {
-	print "<td>";
-	if ($base != $key)
+	foreach ($menu as $key=>$item)
 	{
-		print "<a href='$key'>";
+		print "<td>";
+		if ($base != $key)
+		{
+			print "<a href='$key'>";
+		}
+		print "$item";
+		if ($base != $key)
+		{
+			print "</a>";
+		}
 	}
-	print "$item";
-	if ($base != $key)
-	{
-		print "</a>";
-	}
+}
+else
+{
+	print "<td><a href='login.php'>Login</a>";
 }
 print "</table></center>";
 ?>

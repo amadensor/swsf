@@ -6,6 +6,8 @@
 //Start a new session.
 
 session_start();
+include('views/menu.php');
+
 require 'db_connect.php';
 
 if (array_key_exists('login',$_POST))

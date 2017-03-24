@@ -219,5 +219,44 @@ function delete_service_action($call_vars)
 	db_exec($query);
 }
 
+function list_users($call_vars)
+{
+  $query="select userid,login from users;";
+  $user_list=db_retrieve($query);
+  return $user_list;
+}
+
+function list_user_roles($call_vars)
+{
+	if (array_key_exists('role',$call_vars))
+	{
+		$role=urlencode($call_vars['role']);
+		$query="select a.userid, b.login, a.role_name from user_roles a, users b where a.role_name='$role' and a.userid=b.userid;";
+	}
+	if (array_key_exists('role_user',$call_vars))
+	{
+		$role_user=urlencode($call_vars['role_user']);
+		$query="select userid, role_name from user_roles where userid='$role_user';";
+		$query="select a.userid, b.login, a.role_name from user_roles a, users b where a.userid=$role_user and a.userid=b.userid;";
+	}
+	$user_roles=db_retrieve($query);
+	return $user_roles;
+}
+
+function add_user_role($call_vars)
+{
+	$role_user=urlencode($call_vars['role_user']);
+	$role=urlencode($call_vars['role']);
+	$query="insert into user_roles (userid,role_name) values ($role_user,'$role');";
+	db_exec($query);
+}
+
+function delete_user_role($call_vars)
+{
+	$role_user=urlencode($call_vars['role_user']);
+	$role=urlencode($call_vars['role']);
+	$query="delete from user_roles where userid=$role_user and role_name='$role';";
+	db_exec($query);
+}
 
 ?>
