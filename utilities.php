@@ -6,7 +6,7 @@ require_once 'config.php';
 
 function check_perm($json) //Return true or false based on whether user has a role with this permission
 {
-  $query="select count(*) from role_actions ra,roles r,user_roles ur,users u where r.role_name=r.role_name and ur.role_name=r.role_name and ur.userid=u.userid and u.userid=".$json["user"]." and ra.service_name='".$json["service"]."' and ra.action='".$json["action"]."';";
+  $query="select count(*) from role_actions ra,roles r,user_roles ur,users u where ra.role_name=r.role_name and ur.role_name=r.role_name and ur.userid=u.userid and u.userid=".$json["user"]." and ra.service_name='".$json["service"]."' and ra.action='".$json["action"]."';";
   $perm=db_retrieve($query);
   $perm_count=$perm[0]["count"];
   if ($perm_count==0) 
