@@ -1,84 +1,97 @@
-<html><head>
-</head>
-<body>
 <?php
 
-//Start a new session.
-
 session_start();
-include('views/menu.php');
-
 require 'db_connect.php';
 
-if (array_key_exists('login',$_POST))
+
+
+switch (true)
 {
-$login=urlencode($_POST['login']);
-$query="select userid,pass from users where login='".$login."';";
+case (array_key_exists('login_request',$_POST)):
+	$login_request=json_decode($_POST['login_request']);
+	$login=login_request['login'];
+	$pass=login_request['pass'];
+	$result=login($login,$pass);
+	$json_result=json_encode($result);
+	print $json_result;
+	break;
+
+case (array_key_exists('pass_confirm',$_POST) ):
+	$login=$_POST['login'];
+	$pass=$_POST['pass'];
+	$new_pass=$_POST['pass_confirm'];
+	$result=change_pass($login,$pass,$new_pass);
+	include ('views/menu.php');
+	break;
+
+case ($_POST['change']):
+      print "<html><body><form method=post>ID:<input type=text name=login>Old:<input type=password name=pass>New:<input type=password name=pass_confirm><input type=submit></form></body></html>";
+      break;
+
+
+case (array_key_exists('pass',$_POST)):
+	$login=$_POST['login'];
+	$pass=$_POST['pass'];
+	$result=login($login,$pass);
+	$_SESSION['session_key']=$result['session_key'];
+	$_SESSION['user']=$result['userid'];
+	
+
+case (array_key_exists('session_key',$_SESSION) && $_SESSION['session_key']<>""):
+	include ('views/menu.php');
+	break;
+
+
+default:
+print "<html><body><form method=post>ID:<input type=text name=login>Password:<input type=password name=pass>Change:<input type=checkbox name=change><input type=submit></form></body></html>";
+}
+
+function login($name,$attempt_pass)
+{
+	$query="select userid,pass from users where login='".$name."';";
+	$login_result=db_retrieve($query);
+	$correct_pass=$login_result[0]['pass'];
+	$user=$login_result[0]['userid'];
+	$retval['name']=$name;
+	$retval['session_key']='';
+	$retval['userid']=0;
+
+
+	if (password_verify($attempt_pass, $correct_pass))
+	{
+		$retval['userid']=$user;
+		$new_key=uniqid();
+		$retval["session_key"]=$new_key;
+		$query="delete from sessions where userid=$user;";
+		db_exec($query);
+		$query="insert into sessions (userid,key) values($user,'$new_key');";
+		db_exec($query);
+		//If the password was good, create a new web service session and put it in the PHP session
+    }
+	
+	return $retval;
+	
+}
+
+function change_pass($name,$old_pass,$new_pass)
+{
+
+$query="select userid,pass from users where login='".$name."';";
 $login_result=db_retrieve($query);
 $pass=$login_result[0]['pass'];
 $user=$login_result[0]['userid'];
-if ($pass=='reset')
+if (password_verify($old_pass, $pass) || ($pass=='reset' && $old_pass==$new_pass))
 {
-	if (array_key_exists('pass_confirm',$_POST) )
-	{
-		if ($_POST['pass_confirm']==$_POST['pass'])
-		{
-			print "Confirmed";
-			$pass_hash=password_hash($_POST['pass'],PASSWORD_DEFAULT);
-			//print "<br>pass hash: $pass_hash<br>\n";
-			//$_POST['pass']=$pass_hash;
-			$pass=$pass_hash;
-			$query="update users set pass='$pass_hash' where userid=$user;";
-			//print "<br>$query<br>";
-			db_exec($query);
-		}
-		else
-		{
-			print "Confirmation Failed";
-		}
-	}
-	else 
-	{
-		?>
-<form method=post>
-<input type=hidden name=login value='<?=$login?>'>
-<input type=hidden name=pass value=<?=$_POST['pass']?>>
-<br>Confirm:<input type=password name=pass_confirm>
-<br><input type=submit>
-		<?php		
-	}
-}
-else 
-{
-	if (password_verify($_POST['pass'], $pass))
-	{
-    $_SESSION['user']=$user;
-    $new_key=uniqid();
-    $_SESSION["session_key"]=$new_key;
-    $query="delete from sessions where userid=$user;";
-    db_exec($query);
-    $query="insert into sessions (userid,key) values($user,'$new_key');";
-    db_exec($query);
-    //If the password was good, create a new web service session and put it in the PHP session
-	include ('views/menu.php');
-    }
-	else
-	{
-		print "<br>Login failed\n".$_POST['pass']."     :      ". $pass;
-		unset ($_SESSION['session_key']);
-	}
-}
+	$pass_hash=password_hash($new_pass,PASSWORD_DEFAULT);
+	$pass=$pass_hash;
+	$query="update users set pass='$pass_hash' where userid=$user;";
+	db_exec($query);
 }
 else
 {
-?>
-<form method=post>
-<br>Login:<input type=text name=login>
-<br>Pass:<input type=password name=pass>
-<br><input type=submit>
+	print "Password change failed.";
+}
 
 
-<?php
 }
 ?>
-</body></html>

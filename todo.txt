@@ -1,5 +1,6 @@
 DB security (not ident)
 
+Login page accept JSON
 
 json web services
 simple web services framework

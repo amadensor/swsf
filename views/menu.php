@@ -6,6 +6,7 @@ $menu['roles.php']='Roles';
 $menu['user_roles.php']='User Roles';
 $menu['service_actions.php']='Service Actions';
 $menu['services.php']='Services';
+$menu['logout.php']='Logout';
 
 
 $base= basename($_SERVER['REQUEST_URI']);
