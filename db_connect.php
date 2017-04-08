@@ -6,7 +6,7 @@ require_once 'MDB2.php';
 require_once 'config.php';
 
   
-  $dbconn=& MDB2::singleton($dsn)	;
+  $dbconn= MDB2::singleton($dsn)	;
   if (PEAR::IsError($dbconn)){
     print "conn error\n";
     die($dbconn->getMessage());
@@ -16,7 +16,7 @@ require_once 'config.php';
   
   function db_exec($query) //Just execute and return no result
   {
-    $dbconn=& MDB2::singleton();
+    $dbconn= MDB2::singleton();
     
     if (PEAR::IsError($dbconn)){
       print "exec conn error\n";
@@ -24,7 +24,7 @@ require_once 'config.php';
     };
     //log_message("DB_EXEC $query");
     
-    $result=& $dbconn->exec($query);
+    $result= $dbconn->exec($query);
     
     if (PEAR::IsError($result))
     {
@@ -42,7 +42,7 @@ require_once 'config.php';
   
   function db_retrieve($query) //Query->assoc array
   {
-    $dbconn=& MDB2::singleton();
+    $dbconn= MDB2::singleton();
     
     if (PEAR::IsError($dbconn)){
       print "conn error\n";
@@ -50,7 +50,7 @@ require_once 'config.php';
     };
     //log_message("DB_GET $query");
     
-    $result=& $dbconn->query($query);
+    $result= $dbconn->query($query);
     
     if (PEAR::IsError($result))
     {
