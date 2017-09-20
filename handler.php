@@ -22,7 +22,14 @@ if (
 	
 	if ($func)
 	{
-		$results=$func($json_request);
+		if ($json_request["async"]=="TRUE")
+			{
+			queue($json_request);
+		}
+		else
+			{
+			$results=$func($json_request);
+		}
 	}
 	$results['user']=$user;
 	$results['session_key']=$session_key;

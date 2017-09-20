@@ -6,7 +6,8 @@ require_once 'config.php';
 
 function check_perm($json) //Return true or false based on whether user has a role with this permission
 {
-  $query="select count(*) from role_actions ra,roles r,user_roles ur,users u where ra.role_name=r.role_name and ur.role_name=r.role_name and ur.userid=u.userid and u.userid=".$json["user"]." and ra.service_name='".$json["service"]."' and ra.action='".$json["action"]."';";
+  $query="select count(*) from role_actions ra,roles r,user_roles ur,users u where ra.role_name=r.role_name and ur.role_name=r.role_name and ra.service_name='".$json["service"]."' and ra.action='".$json["action"]."' and ur.userid=u.userid and (u.userid=".$json["user"]." or r.role_name='public');";
+  $query="select count(*) from role_actions ra,roles r,user_roles ur,users u where ra.role_name=r.role_name and ur.role_name=r.role_name and (ur.userid=u.userid and u.userid=".$json["user"]." and ra.service_name='".$json["service"]."' and ra.action='".$json["action"]."') ;";
   $perm=db_retrieve($query);
   $perm_count=$perm[0]["count"];
   if ($perm_count==0) 
@@ -257,6 +258,15 @@ function delete_user_role($call_vars)
 	$role=urlencode($call_vars['role']);
 	$query="delete from user_roles where userid=$role_user and role_name='$role';";
 	db_exec($query);
+}
+
+function queue($json_request)
+{
+	$req_json=json_encode($json_request,0,512);
+	$user=$json_request["user"];
+	$query ="insert into queue(userid,arrival_dttm,request) values ($user,now(),'".$req_json."');";
+	db_exec($query);
+
 }
 
 ?>

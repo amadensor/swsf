@@ -8,6 +8,7 @@ drop table user_roles cascade;
 drop table users cascade;
 drop table sessions cascade;
 drop table log_messages cascade;
+drop table queue cascade;
 
 create table users
 (userid serial
@@ -77,6 +78,20 @@ userid integer references users(userid)
 ,primary key(userid,execution_dttm,key)
 );
 
+create table queue
+(
+transactionid serial
+,userid integer references users (userid)
+,arrival_dttm timestamp
+,execution_dttm timestamp
+,request jsonb
+,response jsonb
+,primary key(transactionid)
+);
+
+create index queue_idx
+on queue(userid,arrival_dttm);
+
 grant select,insert,update,delete on actions to "swsf";
 grant select,insert,update,delete on role_actions to "swsf";
 grant select,insert,update,delete on roles to "swsf";
@@ -84,8 +99,11 @@ grant select,insert,update,delete on service_actions to "swsf";
 grant select,insert,update,delete on services to "swsf";
 grant select,insert,update,delete on user_roles to "swsf";
 grant select,insert,update,delete on users to "swsf";
+grant usage on users_userid_seq to swsf;
 grant select,insert,update,delete on sessions to "swsf";
 grant select,insert,update,delete on log_messages to "swsf";
+grant select,insert,update,delete on queue to "swsf";
+grant usage on queue_transactionid_seq to "swsf";
 
 insert into users (login,pass) values ('admin','reset');
 

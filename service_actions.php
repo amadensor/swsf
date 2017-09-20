@@ -49,7 +49,6 @@ if (is_array($_POST))
 	{
 		$req['service']='service';
 		$req['action']='list';
-		print "Show service list select";
 		$services=call_handler($req);
 		include('views/service_actions_choose.php');
 	}
