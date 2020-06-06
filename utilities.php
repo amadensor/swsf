@@ -7,6 +7,8 @@ require_once 'config.php';
 function check_perm($json) //Return true or false based on whether user has a role with this permission
 {
   $query="select count(*) from role_actions ra,roles r,user_roles ur,users u where ra.role_name=r.role_name and ur.role_name=r.role_name and ra.service_name='".$json["service"]."' and ra.action='".$json["action"]."' and ur.userid=u.userid and (u.userid=".$json["user"]." or r.role_name='public');";
+  $query="select count(*) from role_actions ra,roles r,user_roles ur,users u where ra.role_name=r.role_name and ur.role_name=r.role_name and (ur.userid=u.userid and u.login='".$json["user"]."' and ra.service_name='".$json["service"]."' and ra.action='".$json["action"]."') ;";
+  $query="select count(*) from role_actions ra,roles r,user_roles ur,users u where ra.role_name=r.role_name and ur.role_name=r.role_name and (ur.userid=u.userid and u.login='".$json["user"]."' and ra.service_name='".$json["service"]."' and ra.action='".$json["action"]."') ;";
   $query="select count(*) from role_actions ra,roles r,user_roles ur,users u where ra.role_name=r.role_name and ur.role_name=r.role_name and (ur.userid=u.userid and u.userid=".$json["user"]." and ra.service_name='".$json["service"]."' and ra.action='".$json["action"]."') ;";
   $perm=db_retrieve($query);
   $perm_count=$perm[0]["count"];
@@ -36,6 +38,8 @@ function get_func($json) //Get the appropriate function name for this action for
 
 function verify_session($json) //Verify that the sesstion was valid and not hijacked with a rolling key.
 {
+  if ($json["user"]<>'2')
+  {
   if ($json["session_key"])
   {
   $query="select count(*) from sessions where userid=".$json["user"]." and key='".$json["session_key"]."';";
@@ -55,13 +59,17 @@ function verify_session($json) //Verify that the sesstion was valid and not hija
     $json=false;
     die("Session hijack error");
   }
-  
   return $json;
   }
   else
   {
     return null;
   }
+}
+else 
+{
+  return $json;
+}
 }
 
 

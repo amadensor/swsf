@@ -179,3 +179,5 @@ insert into role_actions (role_name,service_name,action) values ('admin','user_r
 
 insert into user_roles (userid,role_name) (select userid,'admin' from users where login='admin');
 
+insert into users (login) values('public');
+insert into user_roles (userid,role_name) (select userid,'public' from users where login='public');
