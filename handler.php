@@ -7,6 +7,7 @@ require 'utilities.php';
 require '../application.php';
 $service_request=$_POST["service_request"];
 $json_request=json_decode($service_request,TRUE);
+$ret_json=$service_request;
 if (
     is_array($json_request)
 	and array_key_exists("user",$json_request)
@@ -31,8 +32,15 @@ if (
 			$results=$func($json_request);
 		}
 	}
-	$results['user']=$user;
-	$results['session_key']=$session_key;
+	if (!array_key_exists('user',$results))
+	{
+		$results['user']=$user;
+	}
+	if (!array_key_exists('session_key',$results))
+	{
+		$results['session_key']=$session_key;
+	}
+	
 	
 	$ret_json=json_encode($results,0,512);
 	$log_messages=log_message("");

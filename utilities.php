@@ -57,7 +57,7 @@ function verify_session($json) //Verify that the sesstion was valid and not hija
     $query="delete from sessions where userid=".$json["user"].";";
     db_exec($query);
     $json=false;
-    die("Session hijack error");
+    die('{"error":"Session hijack error"}');
   }
   return $json;
   }
@@ -275,6 +275,42 @@ function queue($json_request)
 	$query ="insert into queue(userid,arrival_dttm,request) values ($user,now(),'".$req_json."');";
 	db_exec($query);
 
+}
+
+function login_service($json_request)
+{
+  $name=$json_request['login'];
+  $attempt_pass=$json_request['pass'];
+	$query="select userid,pass from users where login='".$name."';";
+	$login_result=db_retrieve($query);
+	$correct_pass=$login_result[0]['pass'];
+	$user=$login_result[0]['userid'];
+	$retval['name']=$name;
+	$retval['session_key']='';
+	$retval['user']=0;
+
+
+	if (password_verify($attempt_pass, $correct_pass))
+	{
+    $retval['user']=$user;
+		$new_key=uniqid();
+		$retval["session_key"]=$new_key;
+		$query="delete from sessions where userid=$user;";
+		db_exec($query);
+		$query="insert into sessions (userid,key) values($user,'$new_key');";
+		db_exec($query);
+    //If the password was good, create a new web service session and put it in the PHP session
+  }
+  return $retval;
+}
+
+function logout_service($json_request)
+{
+  $user=$json_request['user'];
+  $query="delete from sessions where userid=$user;";
+  db_exec($query);
+  $json_request['user']=0;
+  return $json_request;
 }
 
 ?>
